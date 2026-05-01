@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz - Educational</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .quiz-container {
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .question-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #3498db;
+            font-size: 1rem;
+            color: #333;
+        }
+        .answer-box {
+            margin-top: 15px;
+            padding: 12px;
+            background: #ecfdf5;
+            border-left: 5px solid #27ae60;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #1e7e34;
+            display: none; /* Hide by default */
+        }
+        .show-answer-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .show-answer-btn:hover {
+            background: #2980b9;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>📚 MCQ Quiz</h1>
+
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-text">1. भारत की राजधानी क्या है?</div>
+            <ul class="options">
+                <li>A. मुंबई</li>
+                <li>B. कोलकाता</li>
+                <li>C. नई दिल्ली</li>
+                <li>D. चेन्नई</li>
+            </ul>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-box">✅ सही उत्तर: C. नई दिल्ली</div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-text">2. पृथ्वी का प्राकृतिक उपग्रह कौन सा है?</div>
+            <ul class="options">
+                <li>A. मंगल</li>
+                <li>B. चंद्रमा</li>
+                <li>C. सूर्य</li>
+                <li>D. शनि</li>
+            </ul>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-box">✅ सही उत्तर: B. चंद्रमा</div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-text">3. 'जय जवान जय किसान' का नारा किसने दिया?</div>
+            <ul class="options">
+                <li>A. महात्मा गांधी</li>
+                <li>B. लाल बहादुर शास्त्री</li>
+                <li>C. जवाहरलाल नेहरू</li>
+                <li>D. सरदार पटेल</li>
+            </ul>
+            <button class="show-answer-btn" onclick="toggleAnswer(this)">Show Answer</button>
+            <div class="answer-box">✅ सही उत्तर: B. लाल बहादुर शास्त्री</div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ using GitHub Pages</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(btn) {
+            // btn ke baad waala div (answer-box) dikhao/chhipao
+            const answerBox = btn.nextElementSibling;
+            if (answerBox.style.display === 'none' || answerBox.style.display === '') {
+                answerBox.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            } else {
+                answerBox.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            }
+        }
+    </script>
+</body>
+  </html>
