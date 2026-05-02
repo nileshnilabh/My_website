@@ -1,64 +1,194 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meri Pehli Website</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: white;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 60px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        p {
-            font-size: 1.5rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Test Series Home</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#020617,#0f172a,#1e293b);
+min-height:100vh;
+padding:20px;
+color:white;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:25px;
+box-shadow:0 0 30px rgba(0,0,0,.4);
+}
+
+.logo{
+text-align:center;
+font-size:50px;
+margin-bottom:10px;
+}
+
+h1{
+text-align:center;
+font-size:42px;
+color:#facc15;
+margin-bottom:10px;
+}
+
+.sub{
+text-align:center;
+font-size:22px;
+color:#e2e8f0;
+margin-bottom:25px;
+}
+
+.desc{
+text-align:center;
+font-size:18px;
+line-height:1.8;
+color:#cbd5e1;
+margin-bottom:35px;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:35px;
+}
+
+.feature{
+background:#ffffff12;
+padding:18px;
+border-radius:15px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+color:#fff;
+}
+
+.section{
+text-align:center;
+font-size:30px;
+color:#22c55e;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+color:#111827;
+padding:25px;
+border-radius:20px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 8px 18px rgba(0,0,0,.2);
+}
+
+.card:hover{
+transform:translateY(-8px) scale(1.03);
+background:#dbeafe;
+}
+
+.footer{
+text-align:center;
+margin-top:40px;
+font-size:16px;
+color:#94a3b8;
+}
+
+@media(max-width:600px){
+
+h1{font-size:32px;}
+.sub{font-size:18px;}
+.card{font-size:20px;padding:20px;}
+
+}
+</style>
 </head>
+
 <body>
-    <div class="card">
-        <h1>🚀 Meri Pehli Website</h1>
-        <p>Yeh website maine bina coding seekhe banayi hai! 🎉</p>
-        <p>Bahut jald yahan aur dher saari cheezein aayengi.</p>
-        <a href="welder-test-3.html">
-    <button style="background: #e67e22; color: white; border: none; padding: 12px 25px;
-                   font-size: 1.2rem; border-radius: 30px; cursor: pointer;
-                   margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-        🔧 Welder Test Series
-    </button>
-        </a>
-        <a href="welder-test-3.html">
-    <button style="background: #e67e22; color: white; border: none; padding: 12px 25px;
-                   font-size: 1.2rem; border-radius: 30px; cursor: pointer;
-                   margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-        🔧 Welder Test Series
-    </button>
-        </a>
-        <a href="mcq.html">
-            <button style="background: #f39c12; color: white; border: none; padding: 12px 25px;
-                           font-size: 1.2rem; border-radius: 30px; cursor: pointer;
-                           margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                📝 Start Quiz
-            </button>
-        </a>
-    </div>
+
+<div class="container">
+
+<div class="logo">🎓</div>
+
+<h1>Welcome To Premium Test Series</h1>
+
+<div class="sub">
+All India Trade Test Preparation Portal
+</div>
+
+<div class="desc">
+Prepare smartly with real CBT exam experience.<br>
+Practice mock tests, improve speed, accuracy and confidence.<br>
+Choose your trade and begin your success journey today.
+</div>
+
+<div class="features">
+
+<div class="feature">⏱ Real Exam Timer</div>
+<div class="feature">📊 Instant Result</div>
+<div class="feature">📱 Mobile Friendly</div>
+<div class="feature">🎯 Trade Wise Tests</div>
+
+</div>
+
+<div class="section">Select Your Trade</div>
+
+<div class="grid">
+
+<div class="card" onclick="openTrade('welder')">🔥 Welder</div>
+
+<div class="card" onclick="comingSoon()">🛠 Fitter</div>
+
+<div class="card" onclick="comingSoon()">💻 ICTSM</div>
+
+<div class="card" onclick="comingSoon()">⚙ Machinist</div>
+
+<div class="card" onclick="comingSoon()">📐 MD</div>
+
+<div class="card" onclick="comingSoon()">⚡ Electrician</div>
+
+</div>
+
+<div class="footer">
+Powered By My Website Premium Test Series
+</div>
+
+</div>
+
+<script>
+
+function openTrade(trade){
+
+if(trade==="welder"){
+window.location.href="welder-set-3.html";
+}
+
+}
+
+function comingSoon(){
+alert("Coming Soon...");
+}
+
+</script>
+
 </body>
 </html>
