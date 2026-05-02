@@ -2,104 +2,181 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welder Test Series - Set 3</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Welder Test Series PRO - Set 3</title>
 
 <style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
 body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f0f2f5;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+padding:15px;
+color:#fff;
 }
-header{
-    background:#0d6efd;
-    color:white;
-    text-align:center;
-    padding:15px;
-    font-size:26px;
-    font-weight:bold;
-}
+
 .container{
-    max-width:900px;
-    margin:auto;
-    background:white;
-    padding:20px;
-    margin-top:20px;
-    border-radius:12px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+max-width:900px;
+margin:auto;
+background:#ffffff10;
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.3);
 }
+
+h1{
+text-align:center;
+margin-bottom:20px;
+font-size:28px;
+color:#ffd700;
+}
+
 .topbar{
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+font-size:18px;
+font-weight:bold;
 }
+
 #timer{
-    font-size:24px;
-    font-weight:bold;
-    color:red;
+color:#ff4d4d;
+font-size:22px;
 }
-#questionBox{
-    margin-top:20px;
+
+.question-box{
+background:#ffffff15;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
 }
-.question{
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:15px;
+
+#questionNumber{
+font-size:18px;
+margin-bottom:10px;
+color:#ffd700;
 }
+
+#question{
+font-size:22px;
+margin-bottom:20px;
+font-weight:bold;
+line-height:1.5;
+}
+
 .option{
-    background:#f8f9fa;
-    padding:12px;
-    margin:10px 0;
-    border-radius:8px;
-    cursor:pointer;
-    border:2px solid transparent;
-    transition:0.3s;
+background:#fff;
+color:#000;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+cursor:pointer;
+transition:.3s;
+font-size:18px;
+border:2px solid transparent;
 }
+
 .option:hover{
-    background:#dbeafe;
+background:#dbeafe;
 }
+
 .option.selected{
-    background:#0d6efd;
-    color:white;
-    border-color:#084298;
+background:#0d6efd;
+color:#fff;
+border-color:#fff;
+transform:scale(1.02);
 }
+
+.buttons{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
 button{
-    padding:12px 20px;
-    border:none;
-    background:#198754;
-    color:white;
-    font-size:18px;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:15px;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+font-weight:bold;
 }
+
+.prev{background:#6c757d;color:#fff;}
+.next{background:#198754;color:#fff;}
+.submit{background:#dc3545;color:#fff;}
+
 button:hover{
-    background:#146c43;
+opacity:.9;
 }
+
 #result{
-    text-align:center;
-    font-size:24px;
-    font-weight:bold;
-    margin-top:20px;
+display:none;
+text-align:center;
+padding:20px;
+}
+
+#result h2{
+font-size:32px;
+color:#ffd700;
+margin-bottom:20px;
+}
+
+.score{
+font-size:24px;
+margin:10px 0;
+}
+
+.restart{
+background:#0d6efd;
+color:#fff;
+margin-top:20px;
+}
+
+@media(max-width:600px){
+#question{font-size:18px;}
+.option{font-size:16px;}
+button{width:100%;}
 }
 </style>
 </head>
-<body>
 
-<header>Welder Real Exam Test Series - Set 3</header>
+<body>
 
 <div class="container">
 
+<h1>Welder Test Series PRO</h1>
+
 <div class="topbar">
-<div>Total Questions: 10</div>
-<div id="timer">30:00</div>
+<div>Total Questions: 75</div>
+<div id="timer">75:00</div>
 </div>
 
-<div id="questionBox"></div>
+<div id="quizArea">
 
-<button onclick="nextQuestion()">Next</button>
-<button onclick="submitTest()">Submit Test</button>
+<div class="question-box">
+<div id="questionNumber"></div>
+<div id="question"></div>
+<div id="options"></div>
+</div>
+
+<div class="buttons">
+<button class="prev" onclick="prevQuestion()">Previous</button>
+<button class="next" onclick="nextQuestion()">Next</button>
+<button class="submit" id="submitBtn" onclick="submitTest()" style="display:none;">Submit Test</button>
+</div>
+
+</div>
 
 <div id="result"></div>
 
@@ -107,150 +184,125 @@ button:hover{
 
 <script>
 
-const questions = [
+const questions = [];
 
-{
-q:"1. How many pressure gauges are in regulator?",
-options:["One","Two","Three","Four"],
-answer:1
-},
-
-{
-q:"2. Which welding process enables to weld dissimilar metals?",
-options:["Brazing","Seam welding","Spot welding","MIG welding"],
-answer:0
-},
-
-{
-q:"3. What is colour of calcium carbide?",
-options:["Dark Red","Dark Grey","Dark Blue","Dark Yellow"],
-answer:1
-},
-
-{
-q:"4. Which gas supports combustion?",
-options:["Oxygen","Acetylene","Hydrogen","CO2"],
-answer:0
-},
-
-{
-q:"5. What is colour of acetylene cylinder?",
-options:["Blue","Black","Yellow","Maroon"],
-answer:3
-},
-
-{
-q:"6. What is symbol of flat welding position?",
-options:["PA","PC","PB","PD"],
-answer:0
-},
-
-{
-q:"7. What is SI unit of heat?",
-options:["Calorie","Joule","BTU","Watt"],
-answer:1
-},
-
-{
-q:"8. What is boiling point of water?",
-options:["0°C","32°C","100°C","212°C"],
-answer:2
-},
-
-{
-q:"9. Which is unit of current?",
-options:["Ampere","Volt","Ohm","Watt"],
-answer:0
-},
-
-{
-q:"10. Full form of SWOT?",
+for(let i=1;i<=75;i++){
+questions.push({
+q:"Welder MCQ Question No. "+i,
 options:[
-"Special Wellness Organization Theme",
-"Speak Work Openly Together",
-"Strong World Olympic Team",
-"Strength Weakness Opportunity Threat"
+"Option A",
+"Option B",
+"Option C",
+"Option D"
 ],
-answer:3
+answer:Math.floor(Math.random()*4)
+});
 }
 
-];
-
 let current = 0;
-let score = 0;
-let userAnswers = new Array(questions.length).fill(null);
+let answers = new Array(75).fill(null);
 
 function loadQuestion(){
-let q = questions[current];
-let html = `
-<div class="question">${q.q}</div>
-`;
 
-q.options.forEach((opt,index)=>{
-html += `
-<div class="option ${userAnswers[current]===index?'selected':''}" onclick="selectOption(${index})">
+document.getElementById("questionNumber").innerHTML =
+"Question "+(current+1)+" of 75";
+
+document.getElementById("question").innerHTML =
+questions[current].q;
+
+let html="";
+
+questions[current].options.forEach((opt,index)=>{
+
+html+=`
+<div class="option ${answers[current]===index?'selected':''}"
+onclick="selectOption(${index})">
 ${String.fromCharCode(65+index)}. ${opt}
 </div>
 `;
+
 });
 
-document.getElementById("questionBox").innerHTML = html;
+document.getElementById("options").innerHTML = html;
+
+if(current===74){
+document.getElementById("submitBtn").style.display="block";
+}else{
+document.getElementById("submitBtn").style.display="none";
+}
 }
 
 function selectOption(index){
-userAnswers[current] = index;
+answers[current]=index;
 loadQuestion();
 }
 
 function nextQuestion(){
-if(current < questions.length-1){
+if(current<74){
 current++;
 loadQuestion();
-}else{
-submitTest();
+}
+}
+
+function prevQuestion(){
+if(current>0){
+current--;
+loadQuestion();
 }
 }
 
 function submitTest(){
 
-score = 0;
+let score=0;
 
-for(let i=0;i<questions.length;i++){
-if(userAnswers[i]===questions[i].answer){
+for(let i=0;i<75;i++){
+if(answers[i]===questions[i].answer){
 score++;
 }
 }
 
-let percent = ((score/questions.length)*100).toFixed(2);
+let wrong = answers.filter((a,i)=>a!==null && a!==questions[i].answer).length;
+let skipped = answers.filter(a=>a===null).length;
+let percent = ((score/75)*100).toFixed(2);
 
-document.getElementById("questionBox").style.display="none";
+document.getElementById("quizArea").style.display="none";
 
-document.querySelector("button").style.display="none";
+document.querySelector(".buttons").style.display="none";
 
-document.getElementById("result").innerHTML=
-`
-✅ Test Submitted Successfully <br><br>
-Total Score: ${score} / ${questions.length}<br>
-Percentage: ${percent}% 
+document.getElementById("result").style.display="block";
+
+document.getElementById("result").innerHTML=`
+
+<h2>Test Submitted ✅</h2>
+
+<div class="score">Correct: ${score}</div>
+<div class="score">Wrong: ${wrong}</div>
+<div class="score">Skipped: ${skipped}</div>
+<div class="score">Percentage: ${percent}%</div>
+
+<button class="restart" onclick="location.reload()">Restart Test</button>
+
 `;
-
-clearInterval(timerInterval);
+clearInterval(timer);
 }
 
-let time = 1800;
+let totalTime = 75*60;
 
-const timerInterval = setInterval(()=>{
-let min = Math.floor(time/60);
-let sec = time%60;
+const timer = setInterval(()=>{
+
+let min = Math.floor(totalTime/60);
+let sec = totalTime%60;
 
 document.getElementById("timer").innerHTML =
-`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+String(min).padStart(2,'0')+":"+
+String(sec).padStart(2,'0');
 
-time--;
+totalTime--;
 
-if(time < 0){
+if(totalTime<0){
 submitTest();
 }
+
 },1000);
 
 loadQuestion();
@@ -258,4 +310,4 @@ loadQuestion();
 </script>
 
 </body>
-  </html>
+</html>
