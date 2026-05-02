@@ -3,57 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welder Test - Demo 3 Questions</title>
+    <title>Welder Test - 30 Questions (Set 3)</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
         .container { max-width: 600px; margin: auto; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .hidden { display: none; }
         button { padding: 12px; width: 100%; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-top: 10px; }
-        .start-btn { background: #2ecc71; color: white; font-weight: bold; }
+        .start-btn { background: #2ecc71; color: white; font-weight: bold; font-size: 1.2rem; }
         .option-btn { background: #ecf0f1; border: 2px solid #bdc3c7; margin: 5px 0; text-align: left; }
-        .submit-btn { background: #3498db; color: white; font-weight: bold; }
+        .submit-btn { background: #3498db; color: white; font-weight: bold; font-size: 1.2rem; }
         .timer { background: #e74c3c; color: white; padding: 6px 16px; border-radius: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .feedback { margin-top: 5px; font-weight: bold; }
-        /* 👇 नया स्टाइल — सेलेक्टेड ऑप्शन का रंग */
         .option-btn.selected {
             background: #2ecc71; color: white; border-color: #27ae60; font-weight: bold;
         }
-        /* सबमिट के बाद सही उत्तर का रंग */
         .option-btn.correct {
             background: #27ae60; color: white; border-color: #1e8449;
         }
-        /* सबमिट के बाद गलत उत्तर का रंग */
         .option-btn.wrong {
             background: #e74c3c; color: white; border-color: #c0392b;
+        }
+        .section-tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container" id="startCard">
-        <h2>🔧 Welder Test - Demo</h2>
-        <p>3 प्रश्न | 5 मिनट</p>
+        <h2>🔧 Welder Test - Set 3 (First 30 Questions)</h2>
+        <p>30 प्रश्न | 45 मिनट | उत्तर चुनने पर हरा रंग</p>
         <button class="start-btn" onclick="startTest()">Start Test</button>
     </div>
 
     <div class="container hidden" id="testCard">
         <div class="header">
-            <span><span id="currentQ">1</span>/3</span>
-            <span class="timer" id="timerDisplay">05:00</span>
+            <span><span id="currentQ">1</span>/30</span>
+            <span class="timer" id="timerDisplay">45:00</span>
         </div>
         <div id="questionContainer"></div>
         <button class="submit-btn" id="submitBtn" onclick="submitTest()">Submit Test</button>
     </div>
 
     <script>
+        // ---------- पहले 30 प्रश्न (उत्तर कुंजी के अनुसार) ----------
         const questions = [
-            { question: "1. रेगुलेटर में कितने प्रेसर गेज होते हैं?", options: ["A. 1", "B. 2", "C. 3", "D. 4"], answer: 1 },
-            { question: "2. पानी का क्वथनांक क्या है?", options: ["A. 0°C", "B. 32°C", "C. 100°C", "D. 212°C"], answer: 2 },
-            { question: "3. धारा की इकाई क्या है?", options: ["A. Volt", "B. Ampere", "C. Ohm", "D. Watt"], answer: 1 }
+            // Q1
+            { section: "Trade Theory", question: "1. How many pressure gauges are in regulator?<br>रेगुलेटर में कितने प्रेसर गेज होते हैं?", options: ["A. One pressure gauge / एक दबाव नापने का यंत्र", "B. Two pressure gauges / दो दबाव गेज", "C. Three pressure gauges / तीन दबाव गेज", "D. Four pressure gauges / चार दबाव गेज"], answer: 1 },
+            // Q2
+            { section: "Trade Theory", question: "2. What procedure is followed to connect gas regulator to cylinder in gas welder?<br>गैस वेल्डिंग में सिलेंडर को गैस रेगुलेटर से जोडने के लिए क्या प्रक्रिया अपनाई जाती है?", options: ["A. Open and close valve for few seconds / कुछ सेकंड के लिए वाल्व खोलें और बंद करें", "B. Open the valve for a longer period / वाल्व को लंबे समय तक खोलें", "C. No need to open the valve before connection / कनेक्शन से पहले वाल्व खोलने की आवश्यकता नहीं", "D. Open the valve for a few minutes of time / कुछ मिनट के लिए वाल्व खोलें"], answer: 0 },
+            // Q3
+            { section: "Trade Theory", question: "3. Which type of welding uses a non-ferrous filler with melting point above 450° than base metal?<br>किस प्रकार की वेल्डिंग बेस धातु की तुलना में 450° से ऊपर गलनांक के साथ एक नॉन-फेरस फिलर का उपयोग करती है?", options: ["A. Brazing / ब्रेजिंग", "B. Soldering / सोल्डरिंग", "C. Arc welding / आर्क वेल्डिंग", "D. Gas welding / गैस वेल्डिंग"], answer: 0 },
+            // Q4
+            { section: "Trade Theory", question: "4. What is the angle of blowpipe in leftward technique?<br>लेफ्टवर्ड तकनीक में ब्लोपाइप का कोण क्या है?", options: ["A. 30°-40°", "B. 50°-60°", "C. 60°-70°", "D. 80°-90°"], answer: 0 },
+            // Q5
+            { section: "Trade Theory", question: "5. Which type of blowpipe is used in the high pressure system?<br>उच्च दाब प्रणाली में किस प्रकार के ब्लोपाइप का उपयोग किया जाता है?", options: ["A. Needle / सूई", "B. Injector / इंजेक्टर", "C. Purifier / प्यूरीफायर", "D. Non injector / नॉन इंजेक्टर"], answer: 0 },
+            // Q6
+            { section: "Trade Theory", question: "6. What is the welding technique shown in the figure?<br>चित्र में दिखाई गई वेल्डिंग तकनीक क्या है?", options: ["A. Leftward / बायीं ओर", "B. Rightward / दाहिनी ओर", "C. Backward / पीछे की ओर", "D. Upto downward / नीचे की ओर तक"], answer: 1 },
+            // Q7
+            { section: "Trade Theory", question: "7. What is the full form of CCMS?", options: ["A. Copper Coated Mild Steel", "B. Carbon Coated Mild Steel", "C. Calcium Coated Mild Steel", "D. Chromium Coated Mild Steel"], answer: 0 },
+            // Q8
+            { section: "Trade Theory", question: "8. What is the function of flux in Oxy-acetylene gas welding?<br>ऑक्सी-एसिटिलीन गैस वेल्डिंग में फ्लक्स का क्या कार्य है?", options: ["A. Prevents oxidation / ऑक्सीकरण को रोकता है", "B. Combustion of metal / धातु का दहन", "C. Strengthens filler rod / फिलर रॉड को मजबूत करता है", "D. Strengthens electrode / इलेक्ट्रोड को मजबूत करता है"], answer: 0 },
+            // Q9
+            { section: "Trade Theory", question: "9. What is the name of the brazing shown in the figure?<br>चित्र में दर्शाए गए ब्रेजिंग का नाम क्या है?", options: ["A. Dip brazing / डिप ब्रेजिंग", "B. Torch brazing / टॉर्च ब्रेजिंग", "C. Furnace brazing / फर्नेस ब्रेजिंग", "D. Induction brazing / इंडक्शन ब्रेजिंग"], answer: 0 },
+            // Q10
+            { section: "Trade Theory", question: "10. What is the name of the part marked as 'X' shown in the figure?<br>चित्र में दर्शाए गए 'X' से चिह्नित भाग का नाम क्या है?", options: ["A. Base metal / बेस मेटल", "B. Copper tip / कॉपर टिप", "C. Soldering iron / सोल्डरिंग आयरन", "D. Soldered seam / सोल्डर सीम"], answer: 0 },
+            // Q11
+            { section: "Trade Theory", question: "11. What is the name of the defect marked as 'X' shown in the figure?<br>चित्र में दिखाए गए 'X' से चिह्नित दोष का नाम क्या है?", options: ["A. Cracks / दरारें", "B. Porosity / छिद्रण", "C. Blow holes / ब्लो होल", "D. Burn through / जलकर राख हो जाना"], answer: 3 },
+            // Q12 (answer key says Spatter, index 0)
+            { section: "Trade Theory", question: "12. Which welding defects have pin holes formed on the surface?<br>कौन से वेल्डिंग दोषों में सतह पर पिन होल्स बन जाते हैं?", options: ["A. Spatter / स्पैटर", "B. Porosity / पोरोसिटी", "C. Blow holes / ब्लो होल", "D. Burn through / बर्न थ्रू"], answer: 0 },
+            // Q13 (answer key says PC, index 1)
+            { section: "Trade Theory", question: "13. What is the symbol of flat or down hand position?<br>फ्लैट या डाउन हैंड पोजीशन का प्रतीक क्या है?", options: ["A. PA", "B. PC", "C. PB", "D. PD"], answer: 1 },
+            // Q14 (answer key says Less spatters, index 0)
+            { section: "Trade Theory", question: "14. What is the effect of arc blow?<br>आर्क ब्लो का क्या प्रभाव होता है?", options: ["A. Less spatters / कम छींटे", "B. More spatters / अधिक छींटे", "C. No effect / कोई प्रभाव नहीं", "D. Smooth weld / चिकना वेल्ड"], answer: 0 },
+            // Q15 (answer key says Leftward, index 0)
+            { section: "Trade Theory", question: "15. In which welding technique, the welding starts at the right hand edge and moves towards the left?<br>किस वेल्डिंग तकनीक में वेल्डिंग दाएं हाथ के किनारे से शुरू होकर बाएं की ओर बढ़ती है?", options: ["A. Leftward / बाईं ओर", "B. Rightward / दाईं ओर", "C. Backward / पिछड़ा", "D. Up and Downward / ऊपर और नीचे की ओर"], answer: 0 },
+            // Q16 (answer key says Centigrade heat unit, index 2)
+            { section: "Trade Theory", question: "16. What is the S.I unit of heat?<br>ऊष्मा की एस.आई. इकाई क्या है?", options: ["A. Calorie", "B. Joule", "C. Centigrade heat unit", "D. British thermal unit"], answer: 2 },
+            // Q17 (answer key says 2, index 2)
+            { section: "Trade Theory", question: "17. What is the value for specific heat of water?<br>पानी की विशिष्ट ऊष्मा का मान क्या है?", options: ["A. 4", "B. 3", "C. 2", "D. 1"], answer: 2 },
+            // Q18 (answer key says 32°C, index 1)
+            { section: "Trade Theory", question: "18. What is the boiling point of water?<br>पानी का क्वथनांक क्या होता है?", options: ["A. 0°C", "B. 32°C", "C. 100°C", "D. 212°C"], answer: 1 },
+            // Q19 Workshop Calculation (answer key says Ampere, index 0)
+            { section: "Workshop Calculation", question: "19. Which is the unit of current?<br>धारा की इकाई क्या है?", options: ["A. Ampere / एम्पियर", "B. Volt / वोल्ट", "C. Ohm / ओम", "D. Watt / वाट"], answer: 0 },
+            // Q20 (answer key says Current, index 1)
+            { section: "Workshop Calculation", question: "20. What is the flow of electrons in any conductor?<br>किसी कंडक्टर में इलेक्ट्रॉन का प्रवाह क्या होता है?", options: ["A. Voltage / वोल्टेज", "B. Current / धारा", "C. Resistance / प्रतिरोध", "D. Power / शक्ति"], answer: 1 },
+            // Q21 (answer key says 25 mm, index 2)
+            { section: "Workshop Calculation", question: "21. What is the side of a square whose area is 625mm²?<br>एक वर्ग की भुजा क्या होगी, जिसका क्षेत्रफल 625 मिमी² है?", options: ["A. 15 mm", "B. 20 mm", "C. 25 mm", "D. 30 mm"], answer: 2 },
+            // Q22 Engineering Drawing (answer key says Ball pein hammer, index 0)
+            { section: "Engineering Drawing", question: "22. Identify the name of tool?<br>उपकरण का नाम पहचानें? (Ball pein hammer)", options: ["A. Ball pein hammer / बॉल पीन हथौड़ा", "B. Mallet / लकड़ी का हथौड़ा", "C. Cross pein hammer / क्रॉस पीन हथौड़ा", "D. Starlight pein hammer / स्टारलाइट पीन हथौड़ा"], answer: 0 },
+            // Q23 (answer key says Open end spanner, index 0)
+            { section: "Engineering Drawing", question: "23. Identify the name of tool?<br>उपकरण का नाम पहचानें? (Open end spanner)", options: ["A. Open end spanner / ओपन एंड स्पेनर", "B. Ring spanner / रिंग पाना", "C. Combination spanner / कॉम्बिनेशन स्पेनर", "D. Adjustable spanner / एडजस्टेबल ऑलर"], answer: 0 },
+            // Q24 (answer key says Radius, index 2)
+            { section: "Engineering Drawing", question: "24. Which dimension correctly marked in the circle as per standard?", options: ["A. Diameter outside", "B. Diameter inside", "C. Radius", "D. Circumference"], answer: 2 },
+            // Q25 (answer key says Ring spanner, index 0)
+            { section: "Engineering Drawing", question: "25. Identify the name of tool?<br>उपकरण का नाम पहचानें? (Ring spanner)", options: ["A. Ring spanner / रिंग पाना", "B. Open end spanner / ओपन एंड स्पेनर", "C. Combination spanner / कॉम्बिनेशन स्पेनर", "D. Box spanner / बॉक्स पाना"], answer: 0 },
+            // Q26 (answer key says Combination spanner, index 2)
+            { section: "Engineering Drawing", question: "26. Identify the name of tool?<br>उपकरण का नाम पहचानें? (Combination spanner)", options: ["A. Open end spanner / ओपन एंड स्पेनर", "B. Ring spanner / रिंग पाना", "C. Combination spanner / कॉम्बिनेशन स्पेनर", "D. Adjustable spanner / एडजस्टेबल ऑलर"], answer: 2 },
+            // Q27 (answer key says 25mm, index 0)
+            { section: "Engineering Drawing", question: "27. Which dimension correctly marked in the circle as per standard?", options: ["A. 25mm", "B. 625mm²", "C. 50mm", "D. 100mm"], answer: 0 },
+            // Q28 Employability Skills (answer key says fancy mobile ring tone, index 2)
+            { section: "Employability Skills", question: "28. Which one of the following is a good office etiquette?<br>निम्नलिखित में से कौन सा एक अच्छा कार्यालय शिष्टाचार है?", options: ["A. One should dress formally / औपचारिक रूप से पोशाक पहननी चाहिए", "B. One should not be punctual to work / काम के लिए समय का पाबंद नहीं होना चाहिए", "C. One should have fancy mobile ring tone / फैंसी मोबाइल रिंग टोन होना चाहिए", "D. One should litter one's work place / अपने काम के स्थान पर कूड़ा डालना चाहिए"], answer: 2 },
+            // Q29 (answer key says diphthong, index 2)
+            { section: "Employability Skills", question: "29. Word that is pronounced the same as another word but differs in meaning is called ________<br>वह शब्द जो किसी दूसरे शब्द के समान उच्चारित होता है, लेकिन अर्थ में भिन्न होता है, ________ कहलाता है।", options: ["A. homophone / होमोफोन", "B. homograph / होमोग्राफ", "C. diphthong / डिफ्थॉन्ग", "D. syllable / सिलेबल"], answer: 2 },
+            // Q30 (answer key says fear, index 1)
+            { section: "Employability Skills", question: "30. ________ can help me learn English.<br>________ मुझे अंग्रेजी सीखने में मदद कर सकता है।", options: ["A. dedication / निष्ठा", "B. fear / डर", "C. anger / गुस्सा", "D. shyness / शर्म"], answer: 1 }
         ];
 
-        let userAnswers = new Array(3).fill(null);
-        let timeLeft = 300; // 5 min
+        let userAnswers = new Array(questions.length).fill(null);
+        let timeLeft = 2700; // 45 minutes (30 questions)
         let timerInterval;
         let testStarted = false;
 
@@ -84,14 +148,16 @@
         function renderQuestions() {
             let html = '';
             for (let i = 0; i < questions.length; i++) {
-                html += '<p><strong>' + questions[i].question + '</strong></p>';
-                for (let j = 0; j < questions[i].options.length; j++) {
-                    html += '<button class="option-btn" id="opt' + i + '_' + j + '" onclick="selectAnswer(' + i + ',' + j + ')">' + questions[i].options[j] + '</button><br>';
+                let q = questions[i];
+                html += '<span class="section-tag">' + q.section + '</span>';
+                html += '<p><strong>' + q.question + '</strong></p>';
+                for (let j = 0; j < q.options.length; j++) {
+                    html += '<button class="option-btn" id="opt' + i + '_' + j + '" onclick="selectAnswer(' + i + ',' + j + ')">' + q.options[j] + '</button><br>';
                 }
                 html += '<div class="feedback" id="fb' + i + '"></div><hr>';
             }
             document.getElementById('questionContainer').innerHTML = html;
-            // अगर पहले से कोई उत्तर सेव है (री-रेंडर केस) तो उसे हाइलाइट करें
+            // पहले से चुने उत्तरों को हाइलाइट करें
             for (let i = 0; i < userAnswers.length; i++) {
                 if (userAnswers[i] !== null) {
                     highlightOption(i, userAnswers[i]);
@@ -99,20 +165,13 @@
             }
         }
 
-        // नया फ़ंक्शन: किसी प्रश्न के सभी बटनों से 'selected' हटाकर, चुने हुए बटन में जोड़ें
         function highlightOption(qIndex, oIndex) {
-            // उस प्रश्न के सभी ऑप्शन बटन ढूँढें
             for (let j = 0; j < questions[qIndex].options.length; j++) {
                 let btn = document.getElementById('opt' + qIndex + '_' + j);
-                if (btn) {
-                    btn.classList.remove('selected');
-                }
+                if (btn) btn.classList.remove('selected');
             }
-            // चयनित बटन को हाइलाइट करें
             let selectedBtn = document.getElementById('opt' + qIndex + '_' + oIndex);
-            if (selectedBtn) {
-                selectedBtn.classList.add('selected');
-            }
+            if (selectedBtn) selectedBtn.classList.add('selected');
         }
 
         function selectAnswer(qIndex, oIndex) {
@@ -126,20 +185,17 @@
             testStarted = false;
             clearInterval(timerInterval);
 
-            // सभी ऑप्शन बटन डिसेबल कर दें
             let allBtns = document.querySelectorAll('.option-btn');
-            for (let b of allBtns) {
-                b.disabled = true;
-            }
+            allBtns.forEach(b => b.disabled = true);
 
             let correct = 0;
             let resultHTML = '<h2>📊 Result</h2>';
             for (let i = 0; i < questions.length; i++) {
+                let q = questions[i];
                 let user = userAnswers[i];
-                let right = questions[i].answer;
+                let right = q.answer;
                 let fb = document.getElementById('fb' + i);
-                
-                // सबमिट के बाद सही/गलत का रंग दिखाएँ
+
                 if (user !== null) {
                     let userBtn = document.getElementById('opt' + i + '_' + user);
                     if (user === right) {
@@ -150,23 +206,22 @@
                             userBtn.classList.add('correct');
                         }
                     } else {
-                        fb.innerHTML = '❌ गलत (सही: ' + questions[i].options[right].charAt(0) + ')';
+                        fb.innerHTML = '❌ गलत (सही: ' + q.options[right].charAt(0) + ')';
                         if (userBtn) {
                             userBtn.classList.remove('selected');
                             userBtn.classList.add('wrong');
                         }
-                        // सही उत्तर को भी हरा दिखाएँ
                         let correctBtn = document.getElementById('opt' + i + '_' + right);
                         if (correctBtn) correctBtn.classList.add('correct');
                     }
                 } else {
                     fb.innerHTML = '❌ अनुत्तरित';
-                    // कोई जवाब नहीं, केवल सही उत्तर हरा दिखाएँ
                     let correctBtn = document.getElementById('opt' + i + '_' + right);
                     if (correctBtn) correctBtn.classList.add('correct');
                 }
             }
             resultHTML += '<p>✅ सही: ' + correct + '/' + questions.length + '</p>';
+            resultHTML += '<p>📈 प्रतिशत: ' + ((correct / questions.length) * 100).toFixed(1) + '%</p>';
             document.getElementById('questionContainer').innerHTML += resultHTML;
             document.getElementById('submitBtn').disabled = true;
             if (auto) alert('समय समाप्त!');
