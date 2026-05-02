@@ -105,6 +105,32 @@ button{width:100%}
 
 <body>
 
+  <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAQ4VJL6fe84m9uo5nKDotTO-yR_aWPf4U",
+authDomain: "welder-test-series.firebaseapp.com",
+projectId: "welder-test-series",
+storageBucket: "welder-test-series.firebasestorage.app",
+messagingSenderId: "1003844154199",
+appId: "1:1003844154199:web:9ba824605feaf423cc8412"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+if (!user) {
+alert("Please Login First");
+window.location.href = "login.html";
+}
+});
+
+  </script>
+
 <div class="container">
 
 <h1>Welder Test Series Final</h1>
