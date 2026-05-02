@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<style>
+body{
+font-family:Arial;
+text-align:center;
+padding:40px;
+background:#f2f2f2;
+}
+input{
+width:90%;
+padding:12px;
+margin:10px;
+font-size:18px;
+}
+button{
+padding:12px 30px;
+font-size:18px;
+background:green;
+color:white;
+border:none;
+border-radius:8px;
+}
+a{
+display:block;
+margin-top:15px;
+}
+</style>
+</head>
+<body>
 
+<h2>Welder Test Login</h2>
+
+<input type="email" id="email" placeholder="Enter Email"><br>
+<input type="password" id="password" placeholder="Enter Password"><br>
+
+<button onclick="login()">Login</button>
+
+<a href="register.html">New User? Register</a>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getAuth, signInWithEmailAndPassword }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAQ4VJL6fe84m9uo5nKDotTO-yR_aWPf4U",
+authDomain: "welder-test-series.firebaseapp.com",
+projectId: "welder-test-series",
+storageBucket: "welder-test-series.firebasestorage.app",
+messagingSenderId: "1003844154199",
+appId: "1:1003844154199:web:9ba824605feaf423cc8412"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function(){
+
+let email = document.getElementById("email").value;
+let password = document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>{
+alert("Login Success");
+window.location.href="welder-test-3.html";
+})
+.catch((error)=>{
+alert(error.message);
+});
+
+}
+
+</script>
+
+</body>
+</html>
