@@ -10,11 +10,23 @@
         .hidden { display: none; }
         button { padding: 12px; width: 100%; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-top: 10px; }
         .start-btn { background: #2ecc71; color: white; font-weight: bold; }
-        .option-btn { background: #ecf0f1; border: 2px solid #bdc3c7; margin: 5px 0; }
+        .option-btn { background: #ecf0f1; border: 2px solid #bdc3c7; margin: 5px 0; text-align: left; }
         .submit-btn { background: #3498db; color: white; font-weight: bold; }
         .timer { background: #e74c3c; color: white; padding: 6px 16px; border-radius: 20px; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .feedback { margin-top: 5px; font-weight: bold; }
+        /* 👇 नया स्टाइल — सेलेक्टेड ऑप्शन का रंग */
+        .option-btn.selected {
+            background: #2ecc71; color: white; border-color: #27ae60; font-weight: bold;
+        }
+        /* सबमिट के बाद सही उत्तर का रंग */
+        .option-btn.correct {
+            background: #27ae60; color: white; border-color: #1e8449;
+        }
+        /* सबमिट के बाद गलत उत्तर का रंग */
+        .option-btn.wrong {
+            background: #e74c3c; color: white; border-color: #c0392b;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +60,6 @@
         function startTest() {
             if (testStarted) return;
             testStarted = true;
-            // Hide start, show test
             document.getElementById('startCard').classList.add('hidden');
             document.getElementById('testCard').classList.remove('hidden');
             renderQuestions();
@@ -75,16 +86,39 @@
             for (let i = 0; i < questions.length; i++) {
                 html += '<p><strong>' + questions[i].question + '</strong></p>';
                 for (let j = 0; j < questions[i].options.length; j++) {
-                    html += '<button class="option-btn" onclick="selectAnswer(' + i + ',' + j + ')">' + questions[i].options[j] + '</button><br>';
+                    html += '<button class="option-btn" id="opt' + i + '_' + j + '" onclick="selectAnswer(' + i + ',' + j + ')">' + questions[i].options[j] + '</button><br>';
                 }
                 html += '<div class="feedback" id="fb' + i + '"></div><hr>';
             }
             document.getElementById('questionContainer').innerHTML = html;
+            // अगर पहले से कोई उत्तर सेव है (री-रेंडर केस) तो उसे हाइलाइट करें
+            for (let i = 0; i < userAnswers.length; i++) {
+                if (userAnswers[i] !== null) {
+                    highlightOption(i, userAnswers[i]);
+                }
+            }
+        }
+
+        // नया फ़ंक्शन: किसी प्रश्न के सभी बटनों से 'selected' हटाकर, चुने हुए बटन में जोड़ें
+        function highlightOption(qIndex, oIndex) {
+            // उस प्रश्न के सभी ऑप्शन बटन ढूँढें
+            for (let j = 0; j < questions[qIndex].options.length; j++) {
+                let btn = document.getElementById('opt' + qIndex + '_' + j);
+                if (btn) {
+                    btn.classList.remove('selected');
+                }
+            }
+            // चयनित बटन को हाइलाइट करें
+            let selectedBtn = document.getElementById('opt' + qIndex + '_' + oIndex);
+            if (selectedBtn) {
+                selectedBtn.classList.add('selected');
+            }
         }
 
         function selectAnswer(qIndex, oIndex) {
             if (!testStarted) return;
             userAnswers[qIndex] = oIndex;
+            highlightOption(qIndex, oIndex);
         }
 
         function submitTest(auto) {
@@ -92,19 +126,44 @@
             testStarted = false;
             clearInterval(timerInterval);
 
+            // सभी ऑप्शन बटन डिसेबल कर दें
+            let allBtns = document.querySelectorAll('.option-btn');
+            for (let b of allBtns) {
+                b.disabled = true;
+            }
+
             let correct = 0;
             let resultHTML = '<h2>📊 Result</h2>';
             for (let i = 0; i < questions.length; i++) {
                 let user = userAnswers[i];
                 let right = questions[i].answer;
                 let fb = document.getElementById('fb' + i);
-                if (user === null) {
-                    fb.innerHTML = '❌ अनुत्तरित';
-                } else if (user === right) {
-                    fb.innerHTML = '✅ सही';
-                    correct++;
+                
+                // सबमिट के बाद सही/गलत का रंग दिखाएँ
+                if (user !== null) {
+                    let userBtn = document.getElementById('opt' + i + '_' + user);
+                    if (user === right) {
+                        fb.innerHTML = '✅ सही';
+                        correct++;
+                        if (userBtn) {
+                            userBtn.classList.remove('selected');
+                            userBtn.classList.add('correct');
+                        }
+                    } else {
+                        fb.innerHTML = '❌ गलत (सही: ' + questions[i].options[right].charAt(0) + ')';
+                        if (userBtn) {
+                            userBtn.classList.remove('selected');
+                            userBtn.classList.add('wrong');
+                        }
+                        // सही उत्तर को भी हरा दिखाएँ
+                        let correctBtn = document.getElementById('opt' + i + '_' + right);
+                        if (correctBtn) correctBtn.classList.add('correct');
+                    }
                 } else {
-                    fb.innerHTML = '❌ गलत (सही: ' + questions[i].options[right].charAt(0) + ')';
+                    fb.innerHTML = '❌ अनुत्तरित';
+                    // कोई जवाब नहीं, केवल सही उत्तर हरा दिखाएँ
+                    let correctBtn = document.getElementById('opt' + i + '_' + right);
+                    if (correctBtn) correctBtn.classList.add('correct');
                 }
             }
             resultHTML += '<p>✅ सही: ' + correct + '/' + questions.length + '</p>';
