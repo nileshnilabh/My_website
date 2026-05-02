@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welder Test Series - Set 3</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f0f2f5;
+}
+header{
+    background:#0d6efd;
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-size:26px;
+    font-weight:bold;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    margin-top:20px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+#timer{
+    font-size:24px;
+    font-weight:bold;
+    color:red;
+}
+#questionBox{
+    margin-top:20px;
+}
+.question{
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+.option{
+    background:#f8f9fa;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:0.3s;
+}
+.option:hover{
+    background:#dbeafe;
+}
+.option.selected{
+    background:#0d6efd;
+    color:white;
+    border-color:#084298;
+}
+button{
+    padding:12px 20px;
+    border:none;
+    background:#198754;
+    color:white;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:15px;
+}
+button:hover{
+    background:#146c43;
+}
+#result{
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    margin-top:20px;
+}
+</style>
+</head>
+<body>
+
+<header>Welder Real Exam Test Series - Set 3</header>
+
+<div class="container">
+
+<div class="topbar">
+<div>Total Questions: 10</div>
+<div id="timer">30:00</div>
+</div>
+
+<div id="questionBox"></div>
+
+<button onclick="nextQuestion()">Next</button>
+<button onclick="submitTest()">Submit Test</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"1. How many pressure gauges are in regulator?",
+options:["One","Two","Three","Four"],
+answer:1
+},
+
+{
+q:"2. Which welding process enables to weld dissimilar metals?",
+options:["Brazing","Seam welding","Spot welding","MIG welding"],
+answer:0
+},
+
+{
+q:"3. What is colour of calcium carbide?",
+options:["Dark Red","Dark Grey","Dark Blue","Dark Yellow"],
+answer:1
+},
+
+{
+q:"4. Which gas supports combustion?",
+options:["Oxygen","Acetylene","Hydrogen","CO2"],
+answer:0
+},
+
+{
+q:"5. What is colour of acetylene cylinder?",
+options:["Blue","Black","Yellow","Maroon"],
+answer:3
+},
+
+{
+q:"6. What is symbol of flat welding position?",
+options:["PA","PC","PB","PD"],
+answer:0
+},
+
+{
+q:"7. What is SI unit of heat?",
+options:["Calorie","Joule","BTU","Watt"],
+answer:1
+},
+
+{
+q:"8. What is boiling point of water?",
+options:["0°C","32°C","100°C","212°C"],
+answer:2
+},
+
+{
+q:"9. Which is unit of current?",
+options:["Ampere","Volt","Ohm","Watt"],
+answer:0
+},
+
+{
+q:"10. Full form of SWOT?",
+options:[
+"Special Wellness Organization Theme",
+"Speak Work Openly Together",
+"Strong World Olympic Team",
+"Strength Weakness Opportunity Threat"
+],
+answer:3
+}
+
+];
+
+let current = 0;
+let score = 0;
+let userAnswers = new Array(questions.length).fill(null);
+
+function loadQuestion(){
+let q = questions[current];
+let html = `
+<div class="question">${q.q}</div>
+`;
+
+q.options.forEach((opt,index)=>{
+html += `
+<div class="option ${userAnswers[current]===index?'selected':''}" onclick="selectOption(${index})">
+${String.fromCharCode(65+index)}. ${opt}
+</div>
+`;
+});
+
+document.getElementById("questionBox").innerHTML = html;
+}
+
+function selectOption(index){
+userAnswers[current] = index;
+loadQuestion();
+}
+
+function nextQuestion(){
+if(current < questions.length-1){
+current++;
+loadQuestion();
+}else{
+submitTest();
+}
+}
+
+function submitTest(){
+
+score = 0;
+
+for(let i=0;i<questions.length;i++){
+if(userAnswers[i]===questions[i].answer){
+score++;
+}
+}
+
+let percent = ((score/questions.length)*100).toFixed(2);
+
+document.getElementById("questionBox").style.display="none";
+
+document.querySelector("button").style.display="none";
+
+document.getElementById("result").innerHTML=
+`
+✅ Test Submitted Successfully <br><br>
+Total Score: ${score} / ${questions.length}<br>
+Percentage: ${percent}% 
+`;
+
+clearInterval(timerInterval);
+}
+
+let time = 1800;
+
+const timerInterval = setInterval(()=>{
+let min = Math.floor(time/60);
+let sec = time%60;
+
+document.getElementById("timer").innerHTML =
+`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+
+time--;
+
+if(time < 0){
+submitTest();
+}
+},1000);
+
+loadQuestion();
+
+</script>
+
+</body>
+  </html>
