@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welder Test - Demo 3 Questions</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .hidden { display: none; }
+        button { padding: 12px; width: 100%; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-top: 10px; }
+        .start-btn { background: #2ecc71; color: white; font-weight: bold; }
+        .option-btn { background: #ecf0f1; border: 2px solid #bdc3c7; margin: 5px 0; }
+        .submit-btn { background: #3498db; color: white; font-weight: bold; }
+        .timer { background: #e74c3c; color: white; padding: 6px 16px; border-radius: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .feedback { margin-top: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container" id="startCard">
+        <h2>🔧 Welder Test - Demo</h2>
+        <p>3 प्रश्न | 5 मिनट</p>
+        <button class="start-btn" onclick="startTest()">Start Test</button>
+    </div>
+
+    <div class="container hidden" id="testCard">
+        <div class="header">
+            <span><span id="currentQ">1</span>/3</span>
+            <span class="timer" id="timerDisplay">05:00</span>
+        </div>
+        <div id="questionContainer"></div>
+        <button class="submit-btn" id="submitBtn" onclick="submitTest()">Submit Test</button>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "1. रेगुलेटर में कितने प्रेसर गेज होते हैं?", options: ["A. 1", "B. 2", "C. 3", "D. 4"], answer: 1 },
+            { question: "2. पानी का क्वथनांक क्या है?", options: ["A. 0°C", "B. 32°C", "C. 100°C", "D. 212°C"], answer: 2 },
+            { question: "3. धारा की इकाई क्या है?", options: ["A. Volt", "B. Ampere", "C. Ohm", "D. Watt"], answer: 1 }
+        ];
+
+        let userAnswers = new Array(3).fill(null);
+        let timeLeft = 300; // 5 min
+        let timerInterval;
+        let testStarted = false;
+
+        function startTest() {
+            if (testStarted) return;
+            testStarted = true;
+            // Hide start, show test
+            document.getElementById('startCard').classList.add('hidden');
+            document.getElementById('testCard').classList.remove('hidden');
+            renderQuestions();
+            updateTimerDisplay();
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitTest(true);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById('timerDisplay').textContent = 
+                String(m).padStart(2, '0') + ":" + String(s).padStart(2, '0');
+        }
+
+        function renderQuestions() {
+            let html = '';
+            for (let i = 0; i < questions.length; i++) {
+                html += '<p><strong>' + questions[i].question + '</strong></p>';
+                for (let j = 0; j < questions[i].options.length; j++) {
+                    html += '<button class="option-btn" onclick="selectAnswer(' + i + ',' + j + ')">' + questions[i].options[j] + '</button><br>';
+                }
+                html += '<div class="feedback" id="fb' + i + '"></div><hr>';
+            }
+            document.getElementById('questionContainer').innerHTML = html;
+        }
+
+        function selectAnswer(qIndex, oIndex) {
+            if (!testStarted) return;
+            userAnswers[qIndex] = oIndex;
+        }
+
+        function submitTest(auto) {
+            if (!testStarted) return;
+            testStarted = false;
+            clearInterval(timerInterval);
+
+            let correct = 0;
+            let resultHTML = '<h2>📊 Result</h2>';
+            for (let i = 0; i < questions.length; i++) {
+                let user = userAnswers[i];
+                let right = questions[i].answer;
+                let fb = document.getElementById('fb' + i);
+                if (user === null) {
+                    fb.innerHTML = '❌ अनुत्तरित';
+                } else if (user === right) {
+                    fb.innerHTML = '✅ सही';
+                    correct++;
+                } else {
+                    fb.innerHTML = '❌ गलत (सही: ' + questions[i].options[right].charAt(0) + ')';
+                }
+            }
+            resultHTML += '<p>✅ सही: ' + correct + '/' + questions.length + '</p>';
+            document.getElementById('questionContainer').innerHTML += resultHTML;
+            document.getElementById('submitBtn').disabled = true;
+            if (auto) alert('समय समाप्त!');
+        }
+    </script>
+</body>
+</html>
