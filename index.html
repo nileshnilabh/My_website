@@ -1,47 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Welder Test Series</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Test Series</title>
+
 <style>
 body{
+margin:0;
 font-family:Arial;
-background:#f2f2f2;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
 text-align:center;
-padding:30px;
-}
-.box{
-background:white;
 padding:20px;
-border-radius:12px;
-max-width:400px;
-margin:auto;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
-button{
-width:100%;
-padding:15px;
-margin:10px 0;
-font-size:18px;
-border:none;
-border-radius:8px;
+
+h1{
+font-size:42px;
+color:gold;
+margin-top:20px;
+}
+
+p{
+font-size:20px;
+line-height:1.7;
+color:#ddd;
+}
+
+.box{
+background:rgba(255,255,255,0.08);
+padding:18px;
+margin:15px auto;
+border-radius:18px;
+max-width:500px;
+font-size:26px;
+font-weight:bold;
+}
+
+.trade{
+background:white;
+color:#111827;
+padding:22px;
+margin:18px auto;
+border-radius:22px;
+max-width:500px;
+font-size:28px;
+font-weight:bold;
 cursor:pointer;
 }
+
+.setbox{
+display:none;
+max-width:500px;
+margin:auto;
+}
+
+button{
+width:100%;
+padding:16px;
+margin:10px 0;
+font-size:22px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+
 .open{
 background:green;
 color:white;
 }
+
 .lock{
 background:gray;
 color:white;
 }
 </style>
 </head>
+
 <body>
 
-<div class="box">
-<h2>Welder Test Series</h2>
+<div id="home">
 
-<button class="open" onclick="openSet1()">Start Set 1</button>
+<h1>Welcome To Premium Test Series</h1>
+
+<p>All India Trade Test Preparation Portal</p>
+
+<div class="box">⏱ Real Exam Timer</div>
+<div class="box">📊 Instant Result</div>
+<div class="box">📱 Mobile Friendly</div>
+<div class="box">🎯 Trade Wise Tests</div>
+
+<h1 style="color:#22c55e;font-size:34px;">Select Your Trade</h1>
+
+<div class="trade" onclick="openWelder()">🔥 Welder</div>
+<div class="trade">🛠 Fitter</div>
+<div class="trade">💻 ICTSM</div>
+<div class="trade">⚙ Machinist</div>
+<div class="trade">📐 MD</div>
+<div class="trade">⚡ Electrician</div>
+
+</div>
+
+
+<div id="welderPage" class="setbox">
+
+<h1 style="font-size:32px;">Welder Test Series</h1>
+
+<button class="open" onclick="startSet1()">Start Set 1</button>
 
 <button id="set2" class="lock">🔒 Set 2 Locked</button>
 <button class="lock">🔒 Set 3 Locked</button>
@@ -50,19 +115,51 @@ color:white;
 
 </div>
 
-<script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { getAuth, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyAQ4VJL6fe84m9uo5nKDotTO-yR_aWPf4U",
+authDomain: "welder-test-series.firebaseapp.com",
+projectId: "welder-test-series",
+storageBucket: "welder-test-series.firebasestorage.app",
+messagingSenderId: "1003844154199",
+appId: "1:1003844154199:web:9ba824605feaf423cc8412"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.openWelder=function(){
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+document.getElementById("home").style.display="none";
+document.getElementById("welderPage").style.display="block";
+}else{
+window.location.href="login.html";
+}
+
+});
+
+}
+
+window.startSet1=function(){
+window.location.href="welder-set-3.html";
+}
 
 if(localStorage.getItem("set2")=="open"){
 let btn=document.getElementById("set2");
 btn.innerHTML="Start Set 2";
 btn.className="open";
 btn.onclick=function(){
-window.location.href="set2.html";
+alert("Set 2 Coming Soon");
 }
-}
-
-function openSet1(){
-window.location.href="welder-set-3.html";
 }
 
 </script>
