@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Welder Test Series Final</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+padding:15px;color:#fff;
+}
+.container{
+max-width:950px;
+margin:auto;
+background:#ffffff10;
+backdrop-filter:blur(10px);
+padding:20px;
+border-radius:18px;
+box-shadow:0 0 20px rgba(0,0,0,.35);
+}
+h1{
+text-align:center;
+color:#facc15;
+margin-bottom:20px;
+}
+.topbar{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+font-size:20px;
+font-weight:bold;
+margin-bottom:20px;
+}
+#timer{color:#ef4444}
+.box{
+background:#ffffff12;
+padding:20px;
+border-radius:16px;
+}
+#qno{
+color:#facc15;
+margin-bottom:10px;
+font-size:18px;
+}
+#question{
+font-size:22px;
+line-height:1.6;
+font-weight:bold;
+margin-bottom:15px;
+}
+.option{
+background:#fff;
+color:#000;
+padding:14px;
+margin:10px 0;
+border-radius:12px;
+cursor:pointer;
+font-size:18px;
+transition:.3s;
+border:2px solid transparent;
+}
+.option:hover{background:#dbeafe}
+.option.selected{
+background:#2563eb;
+color:#fff;
+border-color:#fff;
+}
+.buttons{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+button{
+padding:12px 18px;
+font-size:18px;
+font-weight:bold;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+.prev{background:#64748b;color:#fff}
+.next{background:#16a34a;color:#fff}
+.submit{background:#dc2626;color:#fff}
+#result{
+display:none;
+text-align:center;
+padding:20px;
+}
+.score{
+font-size:24px;
+margin:10px 0;
+}
+@media(max-width:600px){
+#question{font-size:18px}
+.option{font-size:16px}
+button{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Welder Test Series Final</h1>
+
+<div class="topbar">
+<div>Total Questions: 75</div>
+<div id="timer">75:00</div>
+</div>
+
+<div id="quizArea">
+<div class="box">
+<div id="qno"></div>
+<div id="question"></div>
+<div id="options"></div>
+</div>
+
+<div class="buttons">
+<button class="prev" onclick="prevQ()">Previous</button>
+<button class="next" onclick="nextQ()">Next</button>
+<button class="submit" id="submitBtn" onclick="submitTest()" style="display:none;">Submit Test</button>
+</div>
+</div>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{q:"1. How many pressure gauges are in regulator?<br>रेगुलेटर में कितने प्रेशर गेज होते हैं?",o:["One","Two","Three","Four"],a:1},
+
+{q:"2. What procedure is followed before connecting regulator?<br>रेगुलेटर जोड़ने से पहले क्या प्रक्रिया अपनाई जाती है?",o:["Open and close valve few seconds","Open long time","No need to open","Open few minutes"],a:0},
+
+{q:"3. Which welding uses non-ferrous filler above 450°C?<br>450°C से ऊपर नॉन फेरस फिलर किसमें उपयोग होता है?",o:["Brazing","Soldering","Arc Welding","Gas Welding"],a:0},
+
+{q:"4. Which welding process joins dissimilar metals?<br>भिन्न धातुओं को कौन जोड़ सकता है?",o:["Brazing","Seam Welding","Spot Welding","MIG Welding"],a:0},
+
+{q:"5. Included angle for double bevel butt joint?<br>डबल बेवल बट जॉइंट का कोण कितना है?",o:["45°","35°","60°","20°"],a:0},
+
+{q:"6. What is colour of calcium carbide?<br>कैल्शियम कार्बाइड का रंग क्या है?",o:["Dark Red","Dark Grey","Dark Blue","Dark Yellow"],a:1},
+
+{q:"7. What is symbol of oxygen?<br>ऑक्सीजन का प्रतीक क्या है?",o:["O₂","C₂","H₂O","C₂H₂"],a:0},
+
+{q:"8. Which gas dissolves in acetone?<br>एसीटोन में कौन सी गैस घुलती है?",o:["Oxygen","Nitrogen","Hydrogen","Acetylene"],a:3},
+
+{q:"9. Which gas supports combustion?<br>दहन में कौन सी गैस सहायक है?",o:["Oxygen","Acetylene","Hydrogen","CO₂"],a:0},
+
+{q:"10. Which document lists essential weld characteristics?<br>वेल्डिंग की आवश्यक विशेषताओं का दस्तावेज़ कौन सा है?",o:["Weld Procedure Specification","Welder Qualification","Procedure Qualification","Drawing"],a:0},
+
+{q:"11. Colour of acetylene cylinder?<br>एसिटिलीन सिलेंडर का रंग क्या है?",o:["Blue","Black","Yellow","Maroon"],a:3},
+
+{q:"12. Name of cylinder shown in figure?<br>चित्र में दिखाए सिलेंडर का नाम?",o:["Oxygen","Acetylene","Argon","CO₂"],a:0},
+
+{q:"13. Name of pressure system shown?<br>चित्र में दाब प्रणाली का नाम?",o:["Low","High","Normal","Medium"],a:1},
+
+{q:"14. Name of pressure system shown?<br>चित्र में दाब प्रणाली का नाम?",o:["Low","High","Normal","Medium"],a:0},
+
+{q:"15. Welding technique shown?<br>चित्र में दिखाई गई तकनीक?",o:["Leftward","Rightward","Backward","Upward"],a:0},
+
+{q:"16. Blowpipe angle in leftward technique?<br>लेफ्टवर्ड तकनीक में ब्लोपाइप कोण?",o:["30°-40°","50°-60°","60°-70°","80°-90°"],a:2},
+
+{q:"17. Name of brazing shown?<br>चित्र में दिखाए ब्रेजिंग का नाम?",o:["Dip Brazing","Torch Brazing","Furnace Brazing","Induction Brazing"],a:2},
+
+{q:"18. Defect having pin holes on surface?<br>सतह पर पिन होल किस दोष में?",o:["Spatter","Porosity","Blow holes","Burn through"],a:1},
+
+{q:"19. Symbol of flat/down hand position?<br>फ्लैट पोजीशन का प्रतीक?",o:["PA","PC","PB","PD"],a:0},
+
+{q:"20. Effect of arc blow?<br>आर्क ब्लो का प्रभाव?",o:["Less spatters","Poor fusion","Good weld","Good penetration"],a:1},
+
+{q:"21. Defect changing size and shape permanently?<br>आकार स्थायी बदलने वाला दोष?",o:["Arc blow","Spatter","Distortion","Incomplete"],a:2},
+
+{q:"22. Letter H in electrode coding indicates?<br>इलेक्ट्रोड कोड में H क्या दर्शाता है?",o:["Hydrogen controlled","Efficiency","Current condition","Radiographic"],a:0},
+
+{q:"23. Use of calcium carbide?<br>कैल्शियम कार्बाइड का उपयोग?",o:["Produces acetylene gas","Produces oxygen","Produces nitrogen","Produces hydrogen"],a:0},
+
+{q:"24. Percentage of calcium in carbide?<br>कार्बाइड में कैल्शियम प्रतिशत?",o:["50.2%","57.3%","62.5%","75.3%"],a:2},
+
+{q:"25. Colour of liquid oxygen?<br>द्रव ऑक्सीजन का रंग?",o:["Pale blue","Dark blue","Pale yellow","Dark yellow"],a:0},
+
+{q:"26. At which temperature liquid oxygen becomes solid?<br>किस तापमान पर द्रव ऑक्सीजन ठोस बनती है?",o:["-200°C","-205°C","-218.4°C","-325.3°C"],a:2},
+
+{q:"27. Percentage of oxygen in atmosphere?<br>वायुमंडल में ऑक्सीजन का प्रतिशत कितना है?",o:["21%","33%","45%","52%"],a:0},
+
+{q:"28. Colour of welding oxygen cylinder?<br>वेल्डिंग ऑक्सीजन सिलेंडर का रंग क्या है?",o:["Red","Blue","Black","Maroon"],a:2},
+
+{q:"29. Which cylinder is fitted with safety fuse plug?<br>किस सिलेंडर में सेफ्टी फ्यूज प्लग होता है?",o:["Oxygen","Argon","Acetylene","CO₂"],a:2},
+
+{q:"30. Capacity of welding oxygen cylinder?<br>वेल्डिंग ऑक्सीजन सिलेंडर की क्षमता?",o:["5 m³","7 m³","10 m³","15 m³"],a:1},
+
+{q:"31. Name of welding technique shown?<br>चित्र में तकनीक का नाम?",o:["Leftward","Rightward","Forehand","Downward"],a:1},
+
+{q:"32. Which blowpipe is used in high pressure system?<br>हाई प्रेशर सिस्टम में कौन ब्लोपाइप उपयोग होता है?",o:["Needle","Injector","Purifier","Non injector"],a:3},
+
+{q:"33. Welding starts at right edge and moves left in which technique?<br>दाएं से शुरू होकर बाएं जाने वाली तकनीक?",o:["Leftward","Rightward","Backward","Upward"],a:0},
+
+{q:"34. Full form of CCMS?<br>CCMS का पूर्ण रूप?",o:["Copper Coated Mild Steel","Carbon Coated Mild Steel","Calcium Coated Mild Steel","Chromium Coated Mild Steel"],a:0},
+
+{q:"35. Function of flux in oxy-acetylene welding?<br>ऑक्सी-एसिटिलीन वेल्डिंग में फ्लक्स का कार्य?",o:["Prevents oxidation","Combustion of metal","Strengthens filler rod","Strengthens electrode"],a:0},
+
+{q:"36. Name of brazing shown?<br>चित्र में दिखाए ब्रेजिंग का नाम?",o:["Dip Brazing","Torch Brazing","Furnace Brazing","Induction Brazing"],a:1},
+
+{q:"37. Name of part marked X?<br>X से चिह्नित भाग का नाम?",o:["Base metal","Copper tip","Soldering iron","Soldered seam"],a:2},
+
+{q:"38. Name of defect marked X?<br>X से चिह्नित दोष का नाम?",o:["Cracks","Porosity","Blow holes","Burn through"],a:2},
+
+{q:"39. SI unit of heat?<br>ऊष्मा की SI इकाई?",o:["Calorie","Joule","CHU","BTU"],a:1},
+
+{q:"40. Value of specific heat of water?<br>पानी की विशिष्ट ऊष्मा का मान?",o:["44","33","22","11"],a:3},
+
+{q:"41. Boiling point of water?<br>पानी का क्वथनांक?",o:["0°C","32°C","100°C","212°C"],a:2},
+
+{q:"42. Unit of current?<br>धारा की इकाई?",o:["Ampere","Volt","Ohm","Watt"],a:0},
+
+{q:"43. Flow of electrons in conductor is called?<br>कंडक्टर में इलेक्ट्रॉनों का प्रवाह क्या कहलाता है?",o:["Voltage","Current","Resistance","Power"],a:1},
+
+{q:"44. Side of square whose area is 625 mm²?<br>625 mm² क्षेत्रफल वाले वर्ग की भुजा?",o:["15 mm","20 mm","25 mm","30 mm"],a:2},
+
+{q:"45. Identify tool shown?<br>चित्र में औजार पहचानें?",o:["Try square","Surface gauge","Steel rule","Feeler gauge"],a:0},
+
+{q:"46. Identify tool shown?<br>चित्र में औजार पहचानें?",o:["Ball pein hammer","Cross pein hammer","Straight pein hammer","Sledge hammer"],a:0},
+
+{q:"47. Identify tool shown?<br>चित्र में औजार पहचानें?",o:["Hawk-billed shear","Aviation shear","Cutting plier","Double cutting shear"],a:2},
+
+{q:"48. Identify tool shown?<br>चित्र में औजार पहचानें?",o:["Ball pein hammer","Mallet","Cross pein hammer","Straight pein hammer"],a:1},
+
+{q:"49. Identify tool shown?<br>चित्र में औजार पहचानें?",o:["Open end spanner","Ring spanner","Combination spanner","Adjustable spanner"],a:0},
+
+{q:"50. Which dimension is correctly marked in circle as per standard?<br>मानक अनुसार वृत्त में सही आयाम कौन सा है?",o:["Option A","Option B","Option C","Option D"],a:1},
+
+{q:"51. Which one of the following is a good office etiquette?<br>निम्न में से अच्छा कार्यालय शिष्टाचार कौन सा है?",o:["Dress formally","Not punctual","Fancy ringtone","Litter workplace"],a:0},
+
+{q:"52. Same pronunciation but different meaning word is called?<br>समान उच्चारण पर अलग अर्थ वाला शब्द?",o:["Homophone","Homograph","Diphthong","Syllable"],a:0},
+
+{q:"53. ______ can help me learn English.<br>_______ मुझे अंग्रेज़ी सीखने में मदद कर सकता है।",o:["Dedication","Fear","Anger","Shyness"],a:0},
+
+{q:"54. Which punctuation mark should be used? Is there any site engineer here<br>कौन सा विराम चिह्न लगेगा?",o:["? ",",",".","!"],a:0},
+
+{q:"55. When is capital letter used?<br>बड़े अक्षर कब उपयोग होते हैं?",o:["Beginning of sentence","Names of persons","Names of places","All the above"],a:3},
+
+{q:"56. Which is a describing word?<br>वर्णनात्मक शब्द कौन सा है?",o:["Eat","Repair","Hot","Soup"],a:2},
+
+{q:"57. Reply to Thank you?<br>Thank you का उत्तर क्या होगा?",o:["Thank you","You're welcome","Bye-bye","How are you"],a:1},
+
+{q:"58. Choose the odd word.<br>अलग शब्द चुनिए।",o:["Please","Sorry","Paper","Thanks"],a:2},
+
+{q:"59. I am a welder. I work with ______.<br>मैं वेल्डर हूँ। मैं ______ के साथ काम करता हूँ।",o:["Nail polish","Robots","Welding tools","Laptops"],a:2},
+
+{q:"60. Today's weather is going to be ______.<br>आज मौसम ______ होगा।",o:["Hopeful","Warm","Blue","Urgent"],a:1},
+
+{q:"61. The word 'when' denotes ______.<br>'When' शब्द किसे दर्शाता है?",o:["Place","Thing","Person","Time"],a:3},
+
+{q:"62. Rahul enjoys ______ with his pet dog.<br>राहुल अपने कुत्ते के साथ ______ पसंद करता है।",o:["Playing","Writing","Doing","Washing"],a:0},
+
+{q:"63. Clear idea of personality strengths and weakness is called ______.<br>अपनी ताकत कमजोरी जानना क्या कहलाता है?",o:["Belief","Self Awareness","Myth","Threat"],a:1},
+
+{q:"64. Abilities and qualities that help you grow are called ______.<br>विकास में मदद करने वाले गुण क्या कहलाते हैं?",o:["Personal Strengths","Weaknesses","Opportunities","Threats"],a:0},
+
+{q:"65. Negative qualities needing work are called ______.<br>नकारात्मक गुण क्या कहलाते हैं?",o:["Strengths","Weaknesses","Opportunities","Threats"],a:1},
+
+{q:"66. Example of personal weakness?<br>व्यक्तिगत कमजोरी का उदाहरण?",o:["Confidence","Being lazy","Hard working","Active"],a:1},
+
+{q:"67. Goals are of two types ______.<br>लक्ष्य दो प्रकार के होते हैं—",o:["Good & bad","Long-term & short-term","Rich & poor","Fixed & non-fixed"],a:1},
+
+{q:"68. What is stress?<br>तनाव क्या है?",o:["Joy","Surprise","Delight","Frustration"],a:3},
+
+{q:"69. Sign of good stress?<br>अच्छे तनाव का संकेत?",o:["Stops goals","Makes doubt","No long tension","Physically ill"],a:2},
+
+{q:"70. Which is NOT a stress buster?<br>इनमें से stress buster नहीं है?",o:["Thinking long hours","Sleep on time","Listening music","Gardening"],a:0},
+
+{q:"71. What is mindfulness?<br>माइंडफुलनेस क्या है?",o:["Ignore everything","Sharpen brain","Present in moment","Full of thoughts"],a:2},
+
+{q:"72. Which statement is true about stress?<br>तनाव के बारे में सही कथन?",o:["Can be managed","Cannot control","Cannot reduce","All"],a:0},
+
+{q:"73. Which statement is true?<br>कौन सा कथन सही है?",o:["Experts only solve","Practice improves solving","Need course always","Not important"],a:1},
+
+{q:"74. What should be considered while making decisions?<br>निर्णय लेते समय किस पर विचार करें?",o:["Mood","Friends choice","Community rules","Personal priorities"],a:3},
+
+{q:"75. Full form of SWOT?<br>SWOT का पूर्ण रूप?",o:["Special Wellness","Speak Work","Strong World","Strength Weakness Opportunity Threat"],a:3}
+
+];
+
+let current=0;
+let ans=new Array(75).fill(null);
+
+function loadQ(){
+document.getElementById("qno").innerHTML="Question "+(current+1)+" / 75";
+document.getElementById("question").innerHTML=questions[current].q;
+
+let html="";
+questions[current].o.forEach((x,i)=>{
+html+=`<div class="option ${ans[current]===i?'selected':''}" onclick="selectAns(${i})">${String.fromCharCode(65+i)}. ${x}</div>`;
+});
+document.getElementById("options").innerHTML=html;
+
+document.getElementById("submitBtn").style.display=(current===74)?"block":"none";
+}
+
+function selectAns(i){
+ans[current]=i;
+loadQ();
+}
+
+function nextQ(){
+if(current<74){current++;loadQ();}
+}
+
+function prevQ(){
+if(current>0){current--;loadQ();}
+}
+
+function submitTest(){
+
+let score=0,wrong=0,skip=0;
+
+for(let i=0;i<75;i++){
+if(ans[i]===null) skip++;
+else if(ans[i]===questions[i].a) score++;
+else wrong++;
+}
+
+let percent=((score/75)*100).toFixed(2);
+
+document.getElementById("quizArea").style.display="none";
+document.getElementById("result").style.display="block";
+
+document.getElementById("result").innerHTML=`
+<h2>✅ Test Submitted</h2>
+<div class="score">Correct / सही: ${score}</div>
+<div class="score">Wrong / गलत: ${wrong}</div>
+<div class="score">Skipped / छोड़ा: ${skip}</div>
+<div class="score">Percentage / प्रतिशत: ${percent}%</div>
+<button onclick="location.reload()">Restart Test</button>
+`;
+clearInterval(timer);
+}
+
+let t=75*60;
+
+const timer=setInterval(()=>{
+let m=Math.floor(t/60);
+let s=t%60;
+document.getElementById("timer").innerHTML=
+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
+
+t--;
+
+if(t<0) submitTest();
+
+},1000);
+
+loadQ();
+
+</script>
+</body>
+</html>
