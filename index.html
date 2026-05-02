@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Welder Test Category</title>
+<title>Premium Test Series Home</title>
 
 <style>
 *{
@@ -21,13 +21,19 @@ color:white;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
 background:rgba(255,255,255,0.08);
-backdrop-filter:blur(14px);
+backdrop-filter:blur(15px);
 padding:30px;
-border-radius:24px;
+border-radius:25px;
 box-shadow:0 0 30px rgba(0,0,0,.4);
+}
+
+.logo{
+text-align:center;
+font-size:50px;
+margin-bottom:10px;
 }
 
 h1{
@@ -39,14 +45,46 @@ margin-bottom:10px;
 
 .sub{
 text-align:center;
-font-size:20px;
+font-size:22px;
+color:#e2e8f0;
+margin-bottom:25px;
+}
+
+.desc{
+text-align:center;
+font-size:18px;
+line-height:1.8;
 color:#cbd5e1;
-margin-bottom:30px;
+margin-bottom:35px;
+}
+
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:35px;
+}
+
+.feature{
+background:#ffffff12;
+padding:18px;
+border-radius:15px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+color:#fff;
+}
+
+.section{
+text-align:center;
+font-size:30px;
+color:#22c55e;
+margin-bottom:20px;
 }
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
 }
 
@@ -68,31 +106,19 @@ transform:translateY(-8px) scale(1.03);
 background:#dbeafe;
 }
 
-.back{
-margin-top:30px;
-text-align:center;
-}
-
-button{
-padding:12px 20px;
-font-size:18px;
-font-weight:bold;
-border:none;
-border-radius:12px;
-cursor:pointer;
-background:#2563eb;
-color:white;
-}
-
 .footer{
 text-align:center;
-margin-top:30px;
+margin-top:40px;
+font-size:16px;
 color:#94a3b8;
 }
 
 @media(max-width:600px){
+
 h1{font-size:32px;}
-.card{font-size:20px;}
+.sub{font-size:18px;}
+.card{font-size:20px;padding:20px;}
+
 }
 </style>
 </head>
@@ -101,53 +127,65 @@ h1{font-size:32px;}
 
 <div class="container">
 
-<h1>🔥 Welder Test Series</h1>
+<div class="logo">🎓</div>
+
+<h1>Welcome To Premium Test Series</h1>
 
 <div class="sub">
-Select your test set and start practice now
+All India Trade Test Preparation Portal
 </div>
+
+<div class="desc">
+Prepare smartly with real CBT exam experience.<br>
+Practice mock tests, improve speed, accuracy and confidence.<br>
+Choose your trade and begin your success journey today.
+</div>
+
+<div class="features">
+
+<div class="feature">⏱ Real Exam Timer</div>
+<div class="feature">📊 Instant Result</div>
+<div class="feature">📱 Mobile Friendly</div>
+<div class="feature">🎯 Trade Wise Tests</div>
+
+</div>
+
+<div class="section">Select Your Trade</div>
 
 <div class="grid">
 
-<div class="card" onclick="openTest('set1')">Set 1</div>
+<div class="card" onclick="openTrade('welder')">🔥 Welder</div>
 
-<div class="card" onclick="openTest('set2')">Set 2</div>
+<div class="card" onclick="comingSoon()">🛠 Fitter</div>
 
-<div class="card" onclick="openTest('set3')">Set 3</div>
+<div class="card" onclick="comingSoon()">💻 ICTSM</div>
 
-<div class="card" onclick="openTest('set4')">Set 4</div>
+<div class="card" onclick="comingSoon()">⚙ Machinist</div>
 
-<div class="card" onclick="openTest('mock')">Mock Test</div>
+<div class="card" onclick="comingSoon()">📐 MD</div>
 
-<div class="card" onclick="openTest('rapid')">Rapid Quiz</div>
+<div class="card" onclick="comingSoon()">⚡ Electrician</div>
 
-</div>
-
-<div class="back">
-<button onclick="goHome()">⬅ Back To Home</button>
 </div>
 
 <div class="footer">
-Premium Welder Practice Portal
+Powered By My Website Premium Test Series
 </div>
 
 </div>
 
 <script>
 
-function openTest(type){
+function openTrade(trade){
 
-if(type==="set3"){
+if(trade==="welder"){
 window.location.href="welder-set-3.html";
 }
-else{
+
+}
+
+function comingSoon(){
 alert("Coming Soon...");
-}
-
-}
-
-function goHome(){
-window.location.href="index.html";
 }
 
 </script>
