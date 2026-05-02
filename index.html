@@ -74,6 +74,11 @@ color:white;
 background:gray;
 color:white;
 }
+
+.back{
+background:red;
+color:white;
+}
 </style>
 </head>
 
@@ -92,7 +97,7 @@ color:white;
 
 <h1 style="color:#22c55e;font-size:34px;">Select Your Trade</h1>
 
-<div class="trade" onclick="checklogin()">🔥 Welder</div>
+<div class="trade" onclick="checkLogin()">🔥 Welder</div>
 <div class="trade">🛠 Fitter</div>
 <div class="trade">💻 ICTSM</div>
 <div class="trade">⚙ Machinist</div>
@@ -113,13 +118,15 @@ color:white;
 <button class="lock">🔒 Set 4 Locked</button>
 <button class="lock">🔒 Set 5 Locked</button>
 
+<button class="back" onclick="goBack()">⬅ Back</button>
+
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getAuth, onAuthStateChanged }
+import { getAuth }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -134,9 +141,9 @@ appId: "1:1003844154199:web:9ba824605feaf423cc8412"
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.openWelder=function(){
+window.checkLogin = function(){
 
-onAuthStateChanged(auth,(user)=>{
+const user = auth.currentUser;
 
 if(user){
 document.getElementById("home").style.display="none";
@@ -145,12 +152,15 @@ document.getElementById("welderPage").style.display="block";
 window.location.href="login.html";
 }
 
-});
-
 }
 
-window.startSet1=function(){
+window.startSet1 = function(){
 window.location.href="welder-set-3.html";
+}
+
+window.goBack = function(){
+document.getElementById("welderPage").style.display="none";
+document.getElementById("home").style.display="block";
 }
 
 if(localStorage.getItem("set2")=="open"){
